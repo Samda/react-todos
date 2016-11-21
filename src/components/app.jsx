@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import TodosList from './todos-list'
 import TodosListHeader from './todos-list-header'
 
-const App = () => {
+const App = ()=> {
   return(
     <TodosList todosUrl="/api/todos"/>
   )

@@ -4,7 +4,7 @@ import TodosListHeader from './todos-list-header'
 import TodosListItem from './todos-list-item'
 import { connect, PromiseState } from 'react-refetch'
 
-const TodosList = ({ todosFetch, deleteTodo, createTodo }) => {
+const TodosList = ({ todosFetch, deleteTodo, createTodo, updateTodo })=> {
   if (todosFetch.pending) {
     return(
       <span>
@@ -28,7 +28,7 @@ const TodosList = ({ todosFetch, deleteTodo, createTodo }) => {
           <TodosListHeader />
           <tbody>
             {todos.map(todo => {
-                return <TodosListItem key={todo.id} todo={ todo } onDeleteTodo={ deleteTodo } />;
+                return <TodosListItem key={todo.id} todo={ todo } onDeleteTodo={deleteTodo} onUpdateToto={updateTodo} />;
             })}
           </tbody>
         </table>
@@ -43,6 +43,7 @@ TodosList.propTypes = {
     todosFetch: PropTypes.instanceOf(PromiseState).isRequired,
     deleteTodo: PropTypes.func.isRequired,
     createTodo: PropTypes.func.isRequired,
+    updateTodo: PropTypes.func.isRequired,
 };
 
 export default connect(
@@ -73,6 +74,25 @@ export default connect(
         todoDeleted: {
           url: `/api/todos/${todo.id}`,
           method: 'DELETE',
+          andThen: () => {
+            return {
+              todosFetch: {
+                url: `${props.todosUrl}`,
+                force: true,
+                refreshing: true
+              }
+            };
+          }
+        }
+      }
+    },
+
+    updateTodo: (todo) => {
+      return {
+        todoUpdated: {
+          url: `/api/todos/${todo.id}`,
+          method: 'PUT',
+          body: JSON.stringify(todo),
           andThen: () => {
             return {
               todosFetch: {
