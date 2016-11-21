@@ -4,8 +4,6 @@ var path = require('path');
 module.exports = {
   devtool: 'inline-source-map',
   entry: [
-    "webpack-dev-server/client?http://127.0.0.1:8080/",
-    "webpack/hot/only-dev-server",
     "./src"
   ],
   output: {
@@ -18,11 +16,41 @@ module.exports = {
   },
   module: {
     loaders: [
-    {
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loaders: ['babel?presets[]=react,presets[]=es2015']
-    }
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loaders: ['babel?presets[]=react,presets[]=es2015']
+      },
+
+      {
+        test: /\.css$/,
+        loader: 'style!css?sourceMap'
+      },
+
+      {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url?limit=10000&mimetype=application/font-woff"
+      },
+
+      {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url?limit=10000&mimetype=application/font-woff"
+      },
+
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url?limit=10000&mimetype=application/octet-stream"
+      },
+
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "file"
+      },
+
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url?limit=10000&mimetype=image/svg+xml"
+      }
     ]
   },
   plugins: [
@@ -30,3 +58,4 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
   ]
 }
+

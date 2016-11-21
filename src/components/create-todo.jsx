@@ -1,56 +1,37 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes  } from 'react'
 
-export default class CreateTodo extends Component {
-  constructor(props){
-    super(props);
+class CreateTodo extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this._createTodo = this._createTodo.bind(this);
+
     this.state = {
-      error: null
+        message: null,
+        errors: null,
+        defaultValues: {}
     };
   }
 
-  renderError(){
-    if(!this.state.error){ return null; }
-
-    return( <div style={{color: 'red'}}>{this.state.error} </div>);
+  _createTodo(e) {
+    e.preventDefault();
+    var todo = { todo: { title: this.refs.todoTitle.value } }
+    this.props.onCreateTodo(todo)
+    this.refs.todoTitle.value = ''
   }
 
   render(){
     return(
-      <form onSubmit={this.handleCreate.bind(this)}>
-        <input type="text" placeholder="add todo" ref="createInput" />
-        <button> Create </button>
-        {this.renderError()}
+      <form>
+        <input ref="todoTitle" />
+        <button onClick={this._createTodo}> create todo </button>
       </form>
-    );
-  }
-
-  handleCreate(event){
-    event.preventDefault();
-
-    const createInput = this.refs.createInput;
-    const task = createInput.value;
-    const validateInput = this.validateInput(task);
-
-    if(validateInput){
-      this.setState({ error: validateInput});
-      return;
-    }
-    this.setState({ error: null });
-    this.props.createTask(task);
-    this.refs.createInput.value = '';
-  }
-
-  validateInput(task){
-    if(!task){
-      return 'Please enter a task.';
-    }else if(_.find(this.props.todos, todo => todo.task === task)){
-      return 'Task already exist!';
-    }else{
-      return null;
-    }
+    )
   }
 }
 
-// renderItems(){
-//     return _.map(this.props.todos, (todo, index) => <TodosListItem key={index} {...todo} />)
-//   }
+CreateTodo.propTypes = {
+  onCreateTodo: PropTypes.func.isRequired
+}
+
+
+export default CreateTodo
