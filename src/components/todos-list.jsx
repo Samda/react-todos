@@ -21,17 +21,19 @@ const TodosList = ({ todosFetch, deleteTodo, createTodo, updateTodo })=> {
   } else if (todosFetch.fulfilled) {
     const todos = todosFetch.value.todos;
     return(
-      <div>
-        <h1> Todos </h1>
-        <CreateTodo onCreateTodo={ createTodo } />
-        <table>
-          <TodosListHeader />
-          <tbody>
-            {todos.map(todo => {
-                return <TodosListItem key={todo.id} todo={ todo } onDeleteTodo={deleteTodo} onUpdateToto={updateTodo} />;
-            })}
-          </tbody>
-        </table>
+      <div className="container">
+        <div className="col-md-6 col-sm-6 col-xs-6">
+          <h1> Todos </h1>
+          <CreateTodo onCreateTodo={ createTodo } />
+          <table className="table">
+            <TodosListHeader />
+            <tbody>
+              {todos.map(todo => {
+                  return <TodosListItem key={todo.id} todo={ todo } onDeleteTodo={deleteTodo} onUpdateToto={updateTodo} />;
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
 

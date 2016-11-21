@@ -45,8 +45,10 @@ class TodosListItem extends Component{
             <input ref="todoTitle" defaultValue={todo.title}/>
           </td>
           <td>
-            <button onClick={this._updateTodo}>Update</button>
-            <button onClick={()=>{this.setState({ isEditing: false })}}>Cancel</button>
+            <div className="btn-group btn-group-sm">
+              <button className="btn btn-default" onClick={this._updateTodo}>Update</button>
+              <button className="btn btn-default" onClick={()=>{this.setState({ isEditing: false })}}>Cancel</button>
+            </div>
           </td>
         </tr>
       )
@@ -55,8 +57,10 @@ class TodosListItem extends Component{
         <tr>
           <td>{todo.title}</td>
           <td>
-            <button onClick={this._editTodo}>Edit</button>
-            <button onClick={this._deleteTodo}>Delete</button>
+            <div className="btn-group btn-group-sm">
+              <button className="btn btn-default" onClick={this._editTodo}>Edit</button>
+              <button className="btn btn-default" onClick={this._deleteTodo}>Delete</button>
+            </div>
           </td>
         </tr>
       )

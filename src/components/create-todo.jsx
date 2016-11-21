@@ -22,8 +22,12 @@ class CreateTodo extends Component {
   render(){
     return(
       <form>
-        <input ref="todoTitle" />
-        <button onClick={this._createTodo}> create todo </button>
+        <div className="input-group">
+          <input className="form-control" placeholder="Search for..." ref="todoTitle" />
+          <span className="input-group-btn">
+            <button className="btn btn-primary" onClick={this._createTodo}> Create Todo </button>
+          </span>
+        </div>
       </form>
     )
   }
